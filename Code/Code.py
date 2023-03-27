@@ -5,6 +5,8 @@ from random import randint, choice
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.jump_sound = pygame.mixer.Sound('audio/jump.mp3')
+        self.jump_sound.set_volume(0.3)
         player_walk_1 = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
         player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
         self.player_walk = [player_walk_1, player_walk_2]
@@ -18,6 +20,7 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
             self.gravity = -20
+            self.jump_sound.play()
 
     def apply_gravity(self):
         self.gravity += 1
@@ -131,6 +134,9 @@ clock = pygame.time.Clock()
 test_font = pygame.font.Font('font/Pixeltype.ttf' ,50)
 sky_surf = pygame.image.load('graphics/Sky.png').convert()
 ground_surf = pygame.image.load('graphics/ground.png').convert()
+bg_music = pygame.mixer.Sound('audio/music.wav')
+bg_music.play(loops = -1)
+bg_music.set_volume(0.3)
 # text_surf = test_font.render('My game', False, (64,64,64))
 # text_rect = text_surf.get_rect(center = (400,50))
 
